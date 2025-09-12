@@ -19,7 +19,19 @@
               50: '#edfaff', 100: '#d6f0ff', 200: '#aee1ff', 300: '#7ecbff',
               400: '#4eb0ff', 500: '#1f90ff', 600: '#0f73db', 700: '#0b5ab0',
               800: '#0b4a8e', 900: '#0c3f75'
-            }
+              ,
+          matchnavy: {
+            50: '#f8faff',
+            100: '#f1f5ff',
+            200: '#e5edff',
+            300: '#d1ddff',
+            400: '#b8c7ff',
+            500: '#9aa8ff',
+            600: '#7c8aff',
+            700: '#5e6cff',
+            800: '#01286a',  // Your original color
+            900: '#001a4a'   // Darker version
+          }}
           },
           boxShadow: { sporty: '0 10px 20px -10px rgba(0,0,0,0.25)' }
         }
@@ -32,38 +44,38 @@
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased">
   <!-- Header -->
-  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur border-b border-slate-200">
+  <header class="sticky top-0 z-40 bg-[#01286a]">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
         <a href="#top" class="flex items-center gap-2 group">
-          <span class="inline-flex h-9 w-9 items-center justify-center rounded-md bg-brand-600 text-white font-bold shadow-sporty group-hover:bg-brand-700 transition">TI</span>
-          <span class="font-extrabold tracking-tight text-slate-900">Tournament Info</span>
+          <span class="inline-flex h-9 w-9 items-center justify-center rounded-md bg-matchyellow-400 text-slate-900 font-bold shadow-sporty group-hover:bg-matchyellow-300 transition">TI</span>
+          <span class="font-extrabold tracking-tight text-white">Tournament Info</span>
         </a>
-        <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
-          <a href="#general-info" class="text-slate-700 hover:text-brand-700">General</a>
-          <a href="#registration" class="text-slate-700 hover:text-brand-700">Registration</a>
-          <a href="#about" class="text-slate-700 hover:text-brand-700">About</a>
-          <a href="#sites" class="text-slate-700 hover:text-brand-700">Sites</a>
+        <nav class="hidden md:flex items-center gap-6 text-sm font-medium bg-matchyellow-400 px-4 py-2 rounded-lg">
+          <a href="#general-info" class="text-slate-900 hover:text-slate-700 font-semibold">General</a>
+          <a href="#registration" class="text-slate-900 hover:text-slate-700 font-semibold">Registration</a>
+          <a href="#about" class="text-slate-900 hover:text-slate-700 font-semibold">About</a>
+          <a href="#sites" class="text-slate-900 hover:text-slate-700 font-semibold">Sites</a>
         </nav>
-        <button id="menuButton" class="md:hidden inline-flex items-center justify-center p-2 rounded-md border border-slate-300 text-slate-700 hover:bg-slate-100" aria-label="Open menu">
+        <button id="menuButton" class="md:hidden inline-flex items-center justify-center p-2 rounded-md border border-matchyellow-400 text-matchyellow-400 hover:bg-matchyellow-400 hover:text-slate-900" aria-label="Open menu">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 5h14a1 1 0 100-2H3a1 1 0 100 2zm14 4H3a1 1 0 100 2h14a1 1 0 100-2zm0 6H3a1 1 0 100 2h14a1 1 0 100-2z" clip-rule="evenodd"/></svg>
         </button>
       </div>
     </div>
-    <div id="mobileMenu" class="md:hidden hidden border-t border-slate-200 bg-white">
+    <div id="mobileMenu" class="md:hidden hidden border-t border-matchyellow-400 bg-[#01286a]">
       <div class="px-4 py-3 space-y-2 text-sm font-medium">
-        <a href="#general-info" class="block px-2 py-2 rounded hover:bg-slate-100">General</a>
-        <a href="#registration" class="block px-2 py-2 rounded hover:bg-slate-100">Registration</a>
-        <a href="#director" class="block px-2 py-2 rounded hover:bg-slate-100">Director</a>
-        <a href="#about" class="block px-2 py-2 rounded hover:bg-slate-100">About</a>
-        <a href="#sites" class="block px-2 py-2 rounded hover:bg-slate-100">Sites</a>
-        <a href="https://example.com/teams" target="_blank" rel="noopener" class="block px-2 py-2 rounded hover:bg-slate-100">Registered Teams</a>
-        <a href="https://example.com/app" target="_blank" rel="noopener" class="block px-2 py-2 rounded hover:bg-slate-100">Download App</a>
-        <a href="https://example.com/draws" target="_blank" rel="noopener" class="block px-2 py-2 rounded hover:bg-slate-100">Draws</a>
-        <a href="https://example.com/desks" target="_blank" rel="noopener" class="block px-2 py-2 rounded hover:bg-slate-100">Virtual Tournament Desk</a>
-        <a href="https://example.com/on-courts" target="_blank" rel="noopener" class="block px-2 py-2 rounded hover:bg-slate-100">On Courts</a>
-        <a href="https://example.com/standings" target="_blank" rel="noopener" class="block px-2 py-2 rounded hover:bg-slate-100">Standings</a>
-        <a href="https://www.weather.gov/" target="_blank" rel="noopener" class="block px-2 py-2 rounded hover:bg-slate-100">Weather</a>
+        <a href="#general-info" class="block px-2 py-2 rounded text-matchyellow-400 hover:bg-matchyellow-400 hover:text-slate-900">General</a>
+        <a href="#registration" class="block px-2 py-2 rounded text-matchyellow-400 hover:bg-matchyellow-400 hover:text-slate-900">Registration</a>
+        <a href="#director" class="block px-2 py-2 rounded text-matchyellow-400 hover:bg-matchyellow-400 hover:text-slate-900">Director</a>
+        <a href="#about" class="block px-2 py-2 rounded text-matchyellow-400 hover:bg-matchyellow-400 hover:text-slate-900">About</a>
+        <a href="#sites" class="block px-2 py-2 rounded text-matchyellow-400 hover:bg-matchyellow-400 hover:text-slate-900">Sites</a>
+        <a href="https://example.com/teams" target="_blank" rel="noopener" class="block px-2 py-2 rounded text-matchyellow-400 hover:bg-matchyellow-400 hover:text-slate-900">Registered Teams</a>
+        <a href="https://example.com/app" target="_blank" rel="noopener" class="block px-2 py-2 rounded text-matchyellow-400 hover:bg-matchyellow-400 hover:text-slate-900">Download App</a>
+        <a href="https://example.com/draws" target="_blank" rel="noopener" class="block px-2 py-2 rounded text-matchyellow-400 hover:bg-matchyellow-400 hover:text-slate-900">Draws</a>
+        <a href="https://example.com/desks" target="_blank" rel="noopener" class="block px-2 py-2 rounded text-matchyellow-400 hover:bg-matchyellow-400 hover:text-slate-900">Virtual Tournament Desk</a>
+        <a href="https://example.com/on-courts" target="_blank" rel="noopener" class="block px-2 py-2 rounded text-matchyellow-400 hover:bg-matchyellow-400 hover:text-slate-900">On Courts</a>
+        <a href="https://example.com/standings" target="_blank" rel="noopener" class="block px-2 py-2 rounded text-matchyellow-400 hover:bg-matchyellow-400 hover:text-slate-900">Standings</a>
+        <a href="https://www.weather.gov/" target="_blank" rel="noopener" class="block px-2 py-2 rounded text-matchyellow-400 hover:bg-matchyellow-400 hover:text-slate-900">Weather</a>
       </div>
     </div>
   </header>
