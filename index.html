@@ -108,20 +108,21 @@
     </div>
   </header>
 
-  <!-- Sub Navigation -->
-  <nav class="sticky top-16 z-30 bg-gray-500 w-full">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center gap-6 text-sm font-medium py-3">
-        <a href="#general-info" class="text-white hover:text-gray-200 font-semibold">Overview</a>
-        <a href="#registration" class="text-white hover:text-gray-200 font-semibold">Registration</a>
-        <a href="#about" class="text-white hover:text-gray-200 font-semibold">Entry Information</a>
-        <a href="#sites" class="text-white hover:text-gray-200 font-semibold">Site</a>
-      </div>
-    </div>
-  </nav>
+  
 
   <!-- Hero / General Info -->
   <main id="top" class="relative">
+    <!-- Sub Navigation -->
+    <nav class="sticky top-16 z-30 bg-gray-500 w-full">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center gap-6 text-sm font-medium py-3">
+          <a href="#general-info" class="text-white hover:text-gray-200 font-semibold">Overview</a>
+          <a href="#registration" class="text-white hover:text-gray-200 font-semibold">Registration</a>
+          <a href="#about" class="text-white hover:text-gray-200 font-semibold">Entry Information</a>
+          <a href="#sites" class="text-white hover:text-gray-200 font-semibold">Site</a>
+        </div>
+      </div>
+    </nav>
     <section id="general-info" class="pt-2 pb-2">
       <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid lg:grid-cols-3 gap-6 items-stretch">
@@ -146,26 +147,27 @@
             </div>
           </div>
           <div class="bg-white rounded-2xl p-6 shadow-sporty border border-slate-200">
-            <div class="space-y-1.5">
-              <a href="https://example.com/teams" target="_blank" rel="noopener" class="block w-full text-center rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm font-medium text-slate-900 hover:bg-brand-50 hover:border-brand-200 transition">
-                Registered Teams
-              </a>
-              <a href="https://example.com/app" target="_blank" rel="noopener" class="block w-full text-center rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm font-medium text-slate-900 hover:bg-brand-50 hover:border-brand-200 transition">
+            <h3 class="hidden lg:block text-lg font-bold text-slate-900 mb-4">Quick Links</h3>
+            <div class="space-y-1.5 lg:space-y-2">
+              <a href="https://example.com/app" target="_blank" rel="noopener" class="block w-full text-center rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 lg:py-2 text-sm font-medium text-slate-900 hover:bg-brand-50 hover:border-brand-200 transition">
                 Download App for Captains & Players
               </a>
-              <a href="https://example.com/draws" target="_blank" rel="noopener" class="block w-full text-center rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm font-medium text-slate-900 hover:bg-brand-50 hover:border-brand-200 transition">
+              <a href="https://example.com/teams" target="_blank" rel="noopener" class="block w-full text-center rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 lg:py-2 text-sm font-medium text-slate-900 hover:bg-brand-50 hover:border-brand-200 transition">
+                Registered Teams
+              </a>
+              <a href="https://example.com/draws" target="_blank" rel="noopener" class="block w-full text-center rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm font-medium text-slate-900 hover:bg-brand-50 hover:border-brand-200 transition lg:hidden">
                 Draws
               </a>
-              <a href="https://example.com/desks" target="_blank" rel="noopener" class="block w-full text-center rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm font-medium text-slate-900 hover:bg-brand-50 hover:border-brand-200 transition">
+              <a href="https://example.com/desks" target="_blank" rel="noopener" class="block w-full text-center rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm font-medium text-slate-900 hover:bg-brand-50 hover:border-brand-200 transition lg:hidden">
                 Virtual Tournament Desk
               </a>
-              <a href="https://example.com/on-courts" target="_blank" rel="noopener" class="block w-full text-center rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm font-medium text-slate-900 hover:bg-brand-50 hover:border-brand-200 transition">
+              <a href="https://example.com/on-courts" target="_blank" rel="noopener" class="block w-full text-center rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm font-medium text-slate-900 hover:bg-brand-50 hover:border-brand-200 transition lg:hidden">
                 On Courts
               </a>
-              <a href="https://example.com/standings" target="_blank" rel="noopener" class="block w-full text-center rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm font-medium text-slate-900 hover:bg-brand-50 hover:border-brand-200 transition">
+              <a href="https://example.com/standings" target="_blank" rel="noopener" class="block w-full text-center rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 lg:py-2 text-sm font-medium text-slate-900 hover:bg-brand-50 hover:border-brand-200 transition">
                 Standings
               </a>
-              <a href="https://www.weather.gov/" target="_blank" rel="noopener" class="block w-full text-center rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm font-medium text-slate-900 hover:bg-brand-50 hover:border-brand-200 transition">
+              <a href="https://www.weather.gov/" target="_blank" rel="noopener" class="block w-full text-center rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 lg:py-2 text-sm font-medium text-slate-900 hover:bg-brand-50 hover:border-brand-200 transition">
                 Weather
               </a>
             </div>
