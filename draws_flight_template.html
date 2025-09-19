@@ -110,10 +110,10 @@
                     <ul class="container col-sm-12 col-md bracket bracket-{{:key}} {{if prop[0].roundName.indexOf('-Q') > -1}}bracket-cq{{/if}} {{if prop[0].roundName.match(/^R\d$/)}}bracket-rr{{/if}}" 
                         data-round="{{:prop[0].roundName}}" data-key="{{:key}}">
                         
-                        {{for prop ~parentIndex=key}}
-                            {{if matchUpStatus != 'BYE' || !#parent.data[0].roundName.match(/^R\d$/)}}
+                        {{for prop ~parentIndex=key ~parentRoundName=prop[0].roundName}}
+                            {{if matchUpStatus != 'BYE' || !~parentRoundName.match(/^R\d$/)}}
                                 <!-- CQ Spacer Logic (from original draws_rendering.js) -->
-                                {{if #parent.data[0].roundName.indexOf('-Q') > -1 && #index == 0}}
+                                {{if ~parentRoundName.indexOf('-Q') > -1 && #index == 0}}
                                     {{if ~parentIndex == 1}}
                                         <li class="match cq-spacer cq-spacer-{{:~parentIndex}}"></li>
                                     {{/if}}
@@ -163,9 +163,9 @@
                                                         ts2"                                                        
                                                       {{/if}}
                                                         data-matchformat="{{:~parent.matchUpFormat}}"
-                                                        data-sched="{{if ~parent.schedule}}{{:formatSchedule(~parent.schedule, ~parent.matchUpStatus)}}{{/if}}" >
+                                                        data-sched="{{if ~parent.schedule}}{{:~formatSchedule(~parent.schedule, ~parent.matchUpStatus)}}{{/if}}" >
 
-                                                        {{if ~parent.schedule}}{{:formatSchedule(~parent.schedule, ~parent.matchUpStatus)}}{{/if}}
+                                                        {{if ~parent.schedule}}{{:~formatSchedule(~parent.schedule, ~parent.matchUpStatus)}}{{/if}}
                                                     </div>     
                                                 {{else}}
                                                     <div class="schedtime schedtime-{{:~parentIndex}} ts3"></div>
@@ -195,9 +195,9 @@
                                             {{if sideNumber == '1'}}
                                                 <div class="schedtime schedtime-{{:~parentIndex}} "
                                                     {{if ~parent.schedule && ~parent.schedule.scheduledDate}}
-                                                        data-sched="{{if ~parent.schedule}}{{:formatSchedule(~parent.schedule, ~parent.matchUpStatus)}}{{/if}}"
+                                                        data-sched="{{if ~parent.schedule}}{{:~formatSchedule(~parent.schedule, ~parent.matchUpStatus)}}{{/if}}"
                                                     {{/if}}>
-                                                    {{if ~parent.schedule}}{{:formatSchedule(~parent.schedule, ~parent.matchUpStatus)}}{{/if}}
+                                                    {{if ~parent.schedule}}{{:~formatSchedule(~parent.schedule, ~parent.matchUpStatus)}}{{/if}}
                                                 </div>
                                             {{else sideNumber == undefined}}
                                                 {{if #index == 0}}
@@ -346,14 +346,19 @@
             console.log('roundMatchUps keys:', templateData.roundMatchUps ? Object.keys(templateData.roundMatchUps) : 'undefined');
             console.log('roundMatchUps["1"]:', templateData.roundMatchUps ? templateData.roundMatchUps["1"] : 'undefined');
             
-            // First render debug template
-            try {
-                var debugTemplate = $.templates("#debugTemplate");
-                var debugHtml = debugTemplate.render(templateData);
-                
-                // Then render main template
-                var template = $.templates("#drawsTemplate");
-                var html = template.render(templateData);
+               // Register helper functions with JSRender
+               $.views.helpers({
+                   formatSchedule: formatSchedule
+               });
+               
+               // First render debug template
+               try {
+                   var debugTemplate = $.templates("#debugTemplate");
+                   var debugHtml = debugTemplate.render(templateData);
+                   
+                   // Then render main template
+                   var template = $.templates("#drawsTemplate");
+                   var html = template.render(templateData);
                 
                 // Insert both into container
                 $('#drawcontainer').html(debugHtml + html);
@@ -377,6 +382,7 @@
                 generateBracketHTML(sampleDrawData, 0);
             });
         }
+
 
         // Example usage
         $(document).ready(function() {
