@@ -6,6 +6,7 @@
     <title>Tournament Draws Template</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jsrender@1.0.14/jsrender.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         .tournament-brackets {
@@ -109,8 +110,15 @@
                     <ul class="container col-sm-12 col-md bracket bracket-{{:key}} {{if prop[0].roundName.indexOf('-Q') > -1}}bracket-cq{{/if}} {{if prop[0].roundName.match(/^R\d$/)}}bracket-rr{{/if}}" 
                         data-round="{{:prop[0].roundName}}" data-key="{{:key}}">
                         
-                        {{for prop}}
+                        {{for prop ~parentIndex=key}}
                             {{if matchUpStatus != 'BYE' || !#parent.data[0].roundName.match(/^R\d$/)}}
+                                <!-- CQ Spacer Logic (from original draws_rendering.js) -->
+                                {{if #parent.data[0].roundName.indexOf('-Q') > -1 && #index == 0}}
+                                    {{if ~parentIndex == 1}}
+                                        <li class="match cq-spacer cq-spacer-{{:~parentIndex}}"></li>
+                                    {{/if}}
+                                {{/if}}
+                                
                                 <li class="match {{if sides[0].participantId == '' || sides[1].participantId == ''}}byematch{{/if}}">
                                     
                                     {{for sides ~parent=#parent.data}}
@@ -119,7 +127,7 @@
                                             <div class="player-spacer"></div>
                                             <div data-matchUpStatus="{{:~parent.matchUpStatus}}" class="player {{if displaySideNumber == '1'}}top{{else}}bottom flipped{{/if}}" 
                                                 {{if ~parent.matchUpStatus == 'approved'}}data-winner="true"{{/if}}
-                                                {{if sourceDrawPositionRange}}data-drawposition="{{:sourceDrawPositionRange}}"{{else}}{{if #getIndex() == 0}}data-drawposition="{{:drawPosition}}"{{/if}}{{/if}}>
+                                                {{if sourceDrawPositionRange}}data-drawposition="{{:sourceDrawPositionRange}}"{{else}}{{if ~parentIndex == 1}}data-drawposition="{{:drawPosition}}"{{/if}}{{/if}}>
                                                 
                                                 <span class="player_icon">
                                                     {{if ~parent.matchUpStatus == 'approved'}}
@@ -131,7 +139,8 @@
                                                 
                                                 <span class="playername" 
                                                       {{if participantId}}data-stID="{{:participantId}}"{{/if}}
-                                                      {{if seedNumber}}data-seednumber="{{:seedNumber}}"{{/if}}>
+                                                      {{if seedNumber}}data-seednumber="{{:seedNumber}}"{{/if}}
+                                                      {{if participant.person && participant.person.addresses && participant.person.addresses[0]}}data-citystate="{{:participant.person.addresses[0].city}}, {{:participant.person.addresses[0].state}}"{{/if}}>
                                                     
                                                     <span class="nowrap" style="cursor:pointer" onclick="openTennislinkTeamPage('{{:participant.participantId}}');return false">
                                                         {{:participant.participantName}}
@@ -143,21 +152,25 @@
                                             </div>
                                             
                                             {{if sideNumber == '1'}}
-                                                <div class="schedtime schedtime-{{:#getIndex() + 1}}" 
-                                                     {{if ~parent.schedule && ~parent.schedule.scheduledDate}}
-                                                         {{if ~parent.matchUpStatus == 'approved' || ~matchUpStatus == 'completed'}}
-                                                             class="matchupbtncont schedtime schedtime-{{:#getIndex() + 1}} ts1"
-                                                             data-matchupid="{{:~parent.matchUpId}}"
-                                                             data-matchformat="{{:~parent.matchUpFormat}}"
-                                                         {{else}}
-                                                             class="schedtime schedtime-{{:#getIndex() + 1}} ts2"
-                                                             data-matchformat="{{:~parent.matchUpFormat}}"
-                                                         {{/if}}
-                                                          data-sched="{{if ~parent.schedule}}{{:~parent.schedule.scheduledDate}} {{:~parent.schedule.scheduledTime}} {{:~parent.schedule.venueId}}{{/if}}"
-                                                         {{if ~parent.schedule}}{{:~parent.schedule.scheduledDate}} {{:~parent.schedule.scheduledTime}} {{:~parent.schedule.venueId}}{{/if}}
-                                                     {{else}}
-                                                         class="schedtime schedtime-{{:#getIndex() + 1}} ts3"
-                                                     {{/if}}></div>
+                                                
+                                                {{if ~parent.schedule && ~parent.schedule.scheduledDate}}
+                                                    <div class="schedtime schedtime-{{:~parentIndex}} 
+                                                      {{if ~parent.matchUpStatus == 'approved' || ~matchUpStatus == 'completed'}} 
+                                                        matchupbtncont ts1" 
+                                                        data-matchupid="{{:~parent.matchUpId}}"
+                                                      
+                                                      {{else}}    
+                                                        ts2"                                                        
+                                                      {{/if}}
+                                                        data-matchformat="{{:~parent.matchUpFormat}}"
+                                                        data-sched="{{if ~parent.schedule}}{{:formatSchedule(~parent.schedule, ~parent.matchUpStatus)}}{{/if}}" >
+
+                                                        {{if ~parent.schedule}}{{:formatSchedule(~parent.schedule, ~parent.matchUpStatus)}}{{/if}}
+                                                    </div>     
+                                                {{else}}
+                                                    <div class="schedtime schedtime-{{:~parentIndex}} ts3"></div>
+                                                {{/if}}
+                                                
                                             {{/if}}
                                             
                                         {{else}}
@@ -170,20 +183,25 @@
                                                     <span class="player_icon"><i class="fas fa-forward fa-lg"></i></span>
                                                     <span class="playername">BYE</span>
                                                 {{else}}
-                                                    <span class="player_icon"><i class="fas fa-user-circle fa-lg"></i></span>
-                                                    <span class="playername">TBD</span>
+                                                    {{if ~parent.matchUpStatus == 'DOUBLE_WALKOVER'}}
+                                                        <span class="playername" data-score="{{:~parent.matchUpStatus}}"></span>
+                                                    {{else}}
+                                                        <span class="player_icon"><i class="fas fa-user-circle fa-lg"></i></span>
+                                                        <span class="playername">TBD</span>
+                                                    {{/if}}
                                                 {{/if}}
                                             </div>
                                             
                                             {{if sideNumber == '1'}}
-                                                <div class="schedtime schedtime-{{:#getIndex() + 1}}"
-                                                     {{if ~parent.schedule && ~parent.schedule.scheduledDate}}
-                                                         data-sched="{{if ~parent.schedule}}{{:~parent.schedule.scheduledDate}} {{:~parent.schedule.scheduledTime}} {{:~parent.schedule.venueId}}{{/if}}"
-                                                         {{if ~parent.schedule}}{{:~parent.schedule.scheduledDate}} {{:~parent.schedule.scheduledTime}} {{:~parent.schedule.venueId}}{{/if}}
-                                                     {{/if}}></div>
+                                                <div class="schedtime schedtime-{{:~parentIndex}} "
+                                                    {{if ~parent.schedule && ~parent.schedule.scheduledDate}}
+                                                        data-sched="{{if ~parent.schedule}}{{:formatSchedule(~parent.schedule, ~parent.matchUpStatus)}}{{/if}}"
+                                                    {{/if}}>
+                                                    {{if ~parent.schedule}}{{:formatSchedule(~parent.schedule, ~parent.matchUpStatus)}}{{/if}}
+                                                </div>
                                             {{else sideNumber == undefined}}
                                                 {{if #index == 0}}
-                                                    <div class="schedtime schedtime-{{:#getIndex() + 1}}"></div>
+                                                    <div class="schedtime schedtime-{{:~parentIndex}} "></div>
                                                 {{/if}}
                                             {{/if}}
                                         {{/if}}
@@ -263,6 +281,29 @@
                 });
             }
             return venueArray;
+        }
+
+        // Helper function to format schedule with moment.js (from original draws_rendering.js)
+        function formatSchedule(schedule, matchUpStatus) {
+            if (!schedule || !schedule.scheduledDate || schedule.scheduledDate === '') {
+                return '  ';
+            }
+            
+            if (matchUpStatus === 'BYE' || matchUpStatus === 'RETIRED' || matchUpStatus === 'WALKOVER') {
+                if (matchUpStatus === 'RETIRED') {
+                    var today = moment().format('YYYY-MM-DD');
+                    var sched = moment(schedule.scheduledDate).format('ddd MMM DD') + ' ' + moment(today + ' ' + schedule.scheduledTime).format('hh:mm A');
+                    sched += ' ' + schedule.venueId;
+                    return sched;
+                } else {
+                    return '  ';
+                }
+            }
+            
+            var today = moment().format('YYYY-MM-DD');
+            var sched = moment(schedule.scheduledDate).format('ddd MMM DD') + ' ' + moment(today + ' ' + schedule.scheduledTime).format('hh:mm A');
+            sched += ' ' + schedule.venueId;
+            return sched;
         }
 
         // Function to render draws using JSRender template
