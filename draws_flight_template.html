@@ -100,11 +100,11 @@
     <script id="drawsTemplate" type="text/x-jsrender">
         <div class="row tournament-brackets">
             {{props roundMatchUps}}
-                {{if #data && #data.length > 0}}
-                    <ul class="container col-sm-12 col-md bracket bracket-{{:#key}} {{if #data[0].roundName.indexOf('-Q') > -1}}bracket-cq{{/if}} {{if #data[0].roundName.match(/^R\d$/)}}bracket-rr{{/if}}" 
-                        data-round="{{:#data[0].roundName}}" data-key="{{:#key}}">
+                {{if prop && prop.length > 0}}
+                    <ul class="container col-sm-12 col-md bracket bracket-{{:key}} {{if prop[0].roundName.indexOf('-Q') > -1}}bracket-cq{{/if}} {{if prop[0].roundName.match(/^R\d$/)}}bracket-rr{{/if}}" 
+                        data-round="{{:prop[0].roundName}}" data-key="{{:key}}">
                         
-                        {{for #data}}
+                        {{for prop}}
                             {{if matchUpStatus != 'BYE' || !#parent.data[0].roundName.match(/^R\d$/)}}
                                 <li class="match {{if sides[0].participantId == '' || sides[1].participantId == ''}}byematch{{/if}}">
                                     
@@ -114,7 +114,7 @@
                                             <div class="player-spacer"></div>
                                             <div class="player {{if displaySideNumber == '1'}}top{{else}}bottom flipped{{/if}}" 
                                                  {{if (displaySideNumber == '1' && #parent.data.winningSide == 1) || (displaySideNumber == '2' && #parent.data.winningSide == 2) || (#parent.data.matchUpStatus == 'BYE' && bye !== true)}}data-winner="true"{{/if}}
-                                                 {{if sourceDrawPositionRange}}data-drawposition="{{:sourceDrawPositionRange}}"{{else}}{{if #parent.parent.index == 0}}data-drawposition="{{:drawPosition}}"{{/if}}{{/if}}>
+                                                 {{if sourceDrawPositionRange}}data-drawposition="{{:sourceDrawPositionRange}}"{{else}}{{if #parent.index == 0}}data-drawposition="{{:drawPosition}}"{{/if}}{{/if}}>
                                                 
                                                 <span class="player_icon">
                                                     {{if (displaySideNumber == '1' && #parent.data.winningSide == 1) || (displaySideNumber == '2' && #parent.data.winningSide == 2) || (#parent.data.matchUpStatus == 'BYE' && bye !== true)}}
@@ -138,20 +138,20 @@
                                             </div>
                                             
                                             {{if sideNumber == '1'}}
-                                                <div class="schedtime schedtime-{{:#parent.parent.parent.index + 1}}" 
+                                                <div class="schedtime schedtime-{{:#parent.index + 1}}" 
                                                      {{if #parent.data.schedule.scheduledDate}}
                                                          {{if #parent.data.matchUpStatus == 'approved' || #parent.data.matchUpStatus == 'completed'}}
-                                                             class="matchupbtncont schedtime schedtime-{{:#parent.parent.parent.index + 1}} ts1"
+                                                             class="matchupbtncont schedtime schedtime-{{:#parent.index + 1}} ts1"
                                                              data-matchupid="{{:#parent.data.matchUpId}}"
-                                                             data-matchformat="{{:#parent.parent.parent.parent.data.matchUpFormat}}"
+                                                             data-matchformat="{{:matchUpFormat}}"
                                                          {{else}}
-                                                             class="schedtime schedtime-{{:#parent.parent.parent.index + 1}} ts2"
-                                                             data-matchformat="{{:#parent.parent.parent.parent.data.matchUpFormat}}"
+                                                             class="schedtime schedtime-{{:#parent.index + 1}} ts2"
+                                                             data-matchformat="{{:matchUpFormat}}"
                                                          {{/if}}
                                                          data-sched="{{:#parent.data.schedule.scheduledDate}} {{:#parent.data.schedule.scheduledTime}} {{:#parent.data.schedule.venueId}}"
                                                          {{:#parent.data.schedule.scheduledDate}} {{:#parent.data.schedule.scheduledTime}} {{:#parent.data.schedule.venueId}}
                                                      {{else}}
-                                                         class="schedtime schedtime-{{:#parent.parent.parent.index + 1}} ts3"
+                                                         class="schedtime schedtime-{{:#parent.index + 1}} ts3"
                                                      {{/if}}></div>
                                             {{/if}}
                                             
@@ -159,7 +159,7 @@
                                             <!-- Player without participant data (TBD) -->
                                             <div class="player-spacer"></div>
                                             <div class="player {{if displaySideNumber == '1' || displaySideNumber == undefined}}top{{else}}bottom flipped{{/if}}"
-                                                 {{if sourceDrawPositionRange}}data-drawposition="{{:sourceDrawPositionRange}}"{{else}}{{if #parent.parent.index == 0}}data-drawposition="{{:drawPosition}}"{{/if}}{{/if}}>
+                                                 {{if sourceDrawPositionRange}}data-drawposition="{{:sourceDrawPositionRange}}"{{else}}{{if #parent.index == 0}}data-drawposition="{{:drawPosition}}"{{/if}}{{/if}}>
                                                 
                                                 {{if bye == true}}
                                                     <span class="player_icon"><i class="fas fa-forward fa-lg"></i></span>
@@ -171,14 +171,14 @@
                                             </div>
                                             
                                             {{if sideNumber == '1'}}
-                                                <div class="schedtime schedtime-{{:#parent.parent.parent.index + 1}}"
+                                                <div class="schedtime schedtime-{{:#parent.index + 1}}"
                                                      {{if #parent.data.schedule.scheduledDate}}
                                                          data-sched="{{:#parent.data.schedule.scheduledDate}} {{:#parent.data.schedule.scheduledTime}} {{:#parent.data.schedule.venueId}}"
                                                          {{:#parent.data.schedule.scheduledDate}} {{:#parent.data.schedule.scheduledTime}} {{:#parent.data.schedule.venueId}}
                                                      {{/if}}></div>
                                             {{else sideNumber == undefined}}
                                                 {{if #index == 0}}
-                                                    <div class="schedtime schedtime-{{:#parent.parent.parent.index + 1}}"></div>
+                                                    <div class="schedtime schedtime-{{:#parent.index + 1}}"></div>
                                                 {{/if}}
                                             {{/if}}
                                         {{/if}}
