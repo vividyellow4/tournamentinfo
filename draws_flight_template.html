@@ -113,16 +113,16 @@
                             {{if matchUpStatus != 'BYE' || !#parent.data[0].roundName.match(/^R\d$/)}}
                                 <li class="match {{if sides[0].participantId == '' || sides[1].participantId == ''}}byematch{{/if}}">
                                     
-                                    {{for sides}}
+                                    {{for sides ~parent=#parent.data}}
                                         {{if participant}}
                                             <!-- Player with participant data -->
                                             <div class="player-spacer"></div>
-                                            <div class="player {{if displaySideNumber == '1'}}top{{else}}bottom flipped{{/if}}" 
-                                                  {{if matchUpStatus == 'approved'}}data-winner="true"{{/if}}
-                                                 {{if sourceDrawPositionRange}}data-drawposition="{{:sourceDrawPositionRange}}"{{else}}{{if #parent.index == 0}}data-drawposition="{{:drawPosition}}"{{/if}}{{/if}}>
+                                            <div data-matchUpStatus="{{:~parent.matchUpStatus}}" class="player {{if displaySideNumber == '1'}}top{{else}}bottom flipped{{/if}}" 
+                                                {{if ~parent.matchUpStatus == 'approved'}}data-winner="true"{{/if}}
+                                                {{if sourceDrawPositionRange}}data-drawposition="{{:sourceDrawPositionRange}}"{{else}}{{if ~parent.index == 0}}data-drawposition="{{:drawPosition}}"{{/if}}{{/if}}>
                                                 
                                                 <span class="player_icon">
-                                                    {{if matchUpStatus == 'approved'}}
+                                                    {{if ~parent.matchUpStatus == 'approved'}}
                                                         <i class="fal fa-smile fa-lg bg-warning rounded-circle"></i>
                                                     {{else}}
                                                         <i class="fas fa-user-circle fa-lg"></i>
@@ -143,20 +143,20 @@
                                             </div>
                                             
                                             {{if sideNumber == '1'}}
-                                                <div class="schedtime schedtime-{{:#parent.index + 1}}" 
-                                                     {{if schedule && schedule.scheduledDate}}
-                                                         {{if matchUpStatus == 'approved' || matchUpStatus == 'completed'}}
-                                                             class="matchupbtncont schedtime schedtime-{{:#parent.index + 1}} ts1"
-                                                             data-matchupid="{{:matchUpId}}"
-                                                             data-matchformat="{{:matchUpFormat}}"
+                                                <div class="schedtime schedtime-{{:~parent.index + 1}}" 
+                                                     {{if ~parent.schedule && ~parent.schedule.scheduledDate}}
+                                                         {{if ~parent.matchUpStatus == 'approved' || ~matchUpStatus == 'completed'}}
+                                                             class="matchupbtncont schedtime schedtime-{{:~parent.index + 1}} ts1"
+                                                             data-matchupid="{{:~parent.matchUpId}}"
+                                                             data-matchformat="{{:~parent.matchUpFormat}}"
                                                          {{else}}
-                                                             class="schedtime schedtime-{{:#parent.index + 1}} ts2"
-                                                             data-matchformat="{{:matchUpFormat}}"
+                                                             class="schedtime schedtime-{{:~parent.index + 1}} ts2"
+                                                             data-matchformat="{{:~parent.matchUpFormat}}"
                                                          {{/if}}
-                                                         data-sched="{{if schedule}}{{:schedule.scheduledDate}} {{:schedule.scheduledTime}} {{:schedule.venueId}}{{/if}}"
-                                                         {{if schedule}}{{:schedule.scheduledDate}} {{:schedule.scheduledTime}} {{:schedule.venueId}}{{/if}}
+                                                          data-sched="{{if ~parent.schedule}}{{:~parent.schedule.scheduledDate}} {{:~parent.schedule.scheduledTime}} {{:~parent.schedule.venueId}}{{/if}}"
+                                                         {{if ~parent.schedule}}{{:~parent.schedule.scheduledDate}} {{:~parent.schedule.scheduledTime}} {{:~parent.schedule.venueId}}{{/if}}
                                                      {{else}}
-                                                         class="schedtime schedtime-{{:#parent.index + 1}} ts3"
+                                                         class="schedtime schedtime-{{:~parent.index + 1}} ts3"
                                                      {{/if}}></div>
                                             {{/if}}
                                             
@@ -176,14 +176,14 @@
                                             </div>
                                             
                                             {{if sideNumber == '1'}}
-                                                <div class="schedtime schedtime-{{:#parent.index + 1}}"
-                                                     {{if schedule && schedule.scheduledDate}}
-                                                         data-sched="{{if schedule}}{{:schedule.scheduledDate}} {{:schedule.scheduledTime}} {{:schedule.venueId}}{{/if}}"
-                                                         {{if schedule}}{{:schedule.scheduledDate}} {{:schedule.scheduledTime}} {{:schedule.venueId}}{{/if}}
+                                                <div class="schedtime schedtime-{{:~parent.index + 1}}"
+                                                     {{if ~parent.schedule && ~parent.schedule.scheduledDate}}
+                                                         data-sched="{{if ~parent.schedule}}{{:~parent.schedule.scheduledDate}} {{:~parent.schedule.scheduledTime}} {{:~parent.schedule.venueId}}{{/if}}"
+                                                         {{if ~parent.schedule}}{{:~parent.schedule.scheduledDate}} {{:~parent.schedule.scheduledTime}} {{:~parent.schedule.venueId}}{{/if}}
                                                      {{/if}}></div>
                                             {{else sideNumber == undefined}}
                                                 {{if #index == 0}}
-                                                    <div class="schedtime schedtime-{{:#parent.index + 1}}"></div>
+                                                    <div class="schedtime schedtime-{{:~parent.index + 1}}"></div>
                                                 {{/if}}
                                             {{/if}}
                                         {{/if}}
