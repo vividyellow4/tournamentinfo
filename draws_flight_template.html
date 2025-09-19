@@ -89,10 +89,14 @@
         <div>
             <h3>Debug Info:</h3>
             <p>roundMatchUps type: {{:typeof roundMatchUps}}</p>
-            <p>roundMatchUps keys: {{:Object.keys(roundMatchUps).join(', ')}}</p>
-            {{props roundMatchUps}}
-                <p>Key: {{:key}}, Data type: {{:typeof prop}}, Length: {{:prop ? prop.length : 'undefined'}}</p>
-            {{/props}}
+            <p>roundMatchUps keys: {{if roundMatchUps}}{{:Object.keys(roundMatchUps).join(', ')}}{{else}}undefined{{/if}}</p>
+            {{if roundMatchUps}}
+                {{props roundMatchUps}}
+                    <p>Key: {{:key}}, Data type: {{:typeof prop}}, Length: {{:prop ? prop.length : 'undefined'}}</p>
+                {{/props}}
+            {{else}}
+                <p>roundMatchUps is undefined or null</p>
+            {{/if}}
         </div>
     </script>
 
@@ -274,32 +278,47 @@
                 return;
             }
             
+            if (!eventData.drawsData[0].structures || !eventData.drawsData[0].structures[structIndex]) {
+                console.error('No structures found in drawsData');
+                return;
+            }
+            
             if (!structIndex || structIndex == '') {
                 structIndex = 0;
             }
             
             // Prepare data for template - use the actual data structure
             var templateData = {
-                roundMatchUps: eventData.drawsData[0].structures[structIndex].roundMatchUps,
+                roundMatchUps: eventData.drawsData[0].structures[structIndex].roundMatchUps || {},
                 matchUpFormat: eventData.drawsData[0].matchUpFormat,
                 venueArray: getVenuesFromEventData(eventData)
             };
             
             // Debug: Log the data structure
+            console.log('Full objDraw:', objDraw);
+            console.log('eventData:', eventData);
+            console.log('drawsData:', eventData.drawsData);
+            console.log('structures:', eventData.drawsData[0].structures);
             console.log('Template data:', templateData);
-            console.log('roundMatchUps keys:', Object.keys(templateData.roundMatchUps));
-            console.log('roundMatchUps["1"]:', templateData.roundMatchUps["1"]);
+            console.log('roundMatchUps type:', typeof templateData.roundMatchUps);
+            console.log('roundMatchUps keys:', templateData.roundMatchUps ? Object.keys(templateData.roundMatchUps) : 'undefined');
+            console.log('roundMatchUps["1"]:', templateData.roundMatchUps ? templateData.roundMatchUps["1"] : 'undefined');
             
             // First render debug template
-            var debugTemplate = $.templates("#debugTemplate");
-            var debugHtml = debugTemplate.render(templateData);
-            
-            // Then render main template
-            var template = $.templates("#drawsTemplate");
-            var html = template.render(templateData);
-            
-            // Insert both into container
-            $('#drawcontainer').html(debugHtml + html);
+            try {
+                var debugTemplate = $.templates("#debugTemplate");
+                var debugHtml = debugTemplate.render(templateData);
+                
+                // Then render main template
+                var template = $.templates("#drawsTemplate");
+                var html = template.render(templateData);
+                
+                // Insert both into container
+                $('#drawcontainer').html(debugHtml + html);
+            } catch (error) {
+                console.error('Template rendering error:', error);
+                $('#drawcontainer').html('<div class="error">Template rendering failed: ' + error.message + '</div>');
+            }
         }
 
         // Sample data structure for testing
