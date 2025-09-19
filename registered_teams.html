@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Registered Teams - Tournament Info</title>
+  <meta name="description" content="View all registered teams, divisions, and team rosters for the tournament.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui'] },
+          colors: {
+            brand: {
+              50: '#edfaff', 100: '#d6f0ff', 200: '#aee1ff', 300: '#7ecbff',
+              400: '#4eb0ff', 500: '#1f90ff', 600: '#0f73db', 700: '#0b5ab0',
+              800: '#0b4a8e', 900: '#0c3f75'
+            },
+            matchnavy: {
+              50: '#f8faff',
+              100: '#f1f5ff',
+              200: '#e5edff',
+              300: '#d1ddff',
+              400: '#b8c7ff',
+              500: '#9aa8ff',
+              600: '#7c8aff',
+              700: '#5e6cff',
+              800: '#01286a',  // Your original color
+              900: '#001a4a'   // Darker version
+            },
+            matchyellow: {
+              50: '#fefce8',
+              100: '#fef9c3',
+              200: '#fef08a',
+              300: '#fde047',
+              400: '#fcc91c',  // Your original color
+              500: '#eab308',
+              600: '#ca8a04',
+              700: '#a16207',
+              800: '#854d0e',
+              900: '#713f12'
+            },
+            primary: '#098dea',
+            secondary: '#a4b3bb',
+            success: '#28a745',
+            info: '#17a2b8',
+            warning: '#ffc107',
+            danger: '#dc3545',
+            light: '#f8f9fa',
+            dark: '#151d2a'
+          },
+          boxShadow: { sporty: '0 10px 20px -10px rgba(0,0,0,0.25)' }
+        }
+      }
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased">
+  <!-- Header -->
+  <header class="sticky top-0 z-40 bg-matchnavy-800">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 md:h-16 sm:h-20">
+        <a href="index.html" class="flex items-center gap-2 group w-full sm:w-auto">
+          <div class="flex flex-col sm:flex-row items-center gap-1 sm:gap-2 w-full sm:w-auto">
+            <span class="inline-flex h-9 w-32 sm:h-9 sm:w-32 h-12 w-full items-center justify-center rounded-md shadow-sporty group-hover:opacity-80 transition -mt-2 -mb-2 sm:mt-0 sm:mb-0" style="background-image: url(https://s3.amazonaws.com/3738/17741/1617044998_usta-logo.png); background-size: contain; background-repeat: no-repeat; background-position: center;"></span>
+            <span class="font-extrabold tracking-tight text-white text-sm sm:text-base text-center sm:text-left whitespace-nowrap overflow-hidden text-ellipsis max-w-[300px] sm:max-w-none">[Section/District Name] Tournament Information</span>
+          </div>
+        </a>
+        <nav class="hidden md:flex items-center gap-6 text-sm font-medium bg-matchyellow-400 px-4 py-2 rounded-lg">
+          <a href="index.html#general-info" class="text-slate-900 hover:text-slate-700 font-semibold">General Info</a>
+          <a href="https://example.com/draws" target="_blank" rel="noopener" class="text-slate-900 hover:text-slate-700 font-semibold">Draws</a>
+          <a href="https://example.com/desks" target="_blank" rel="noopener" class="text-slate-900 hover:text-slate-700 font-semibold">Virtual Tournament Desk</a>
+          <a href="https://example.com/on-courts" target="_blank" rel="noopener" class="text-slate-900 hover:text-slate-700 font-semibold">On Courts</a>
+          <div class="relative group">
+            <button class="text-slate-900 hover:text-slate-700 font-semibold flex items-center gap-1">
+              More
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+              </svg>
+            </button>
+            <div class="absolute top-full left-0 mt-1 w-48 bg-white rounded-lg shadow-lg border border-slate-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+              <div class="py-2">
+                <a href="https://example.com/app" target="_blank" rel="noopener" class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">Download App for Captains & Players</a>
+                <a href="registered_teams.html" class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">Registered Teams</a>
+                <a href="https://example.com/standings" target="_blank" rel="noopener" class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">Standings</a>
+                <a href="https://www.weather.gov/" target="_blank" rel="noopener" class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">Weather</a>
+              </div>
+            </div>
+          </div>
+        </nav>
+        <button id="menuButton" class="md:hidden inline-flex items-center justify-center p-2 rounded-md border border-matchyellow-400 text-matchyellow-400 hover:bg-matchyellow-400 hover:text-slate-900" aria-label="Open menu">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 5h14a1 1 0 100-2H3a1 1 0 100 2zm14 4H3a1 1 0 100 2h14a1 1 0 100-2zm0 6H3a1 1 0 100 2h14a1 1 0 100-2z" clip-rule="evenodd"/></svg>
+        </button>
+      </div>
+    </div>
+    <div id="mobileMenu" class="md:hidden hidden border-t border-matchyellow-400 bg-[#01286a]">
+      <div class="px-4 py-3 space-y-2 text-sm font-medium">
+        <div class="text-matchyellow-400 font-bold text-xs uppercase tracking-wider mb-2">Main Navigation</div>
+        <a href="index.html#general-info" class="block px-2 py-2 rounded text-matchyellow-400 hover:bg-matchyellow-400 hover:text-slate-900">General Info</a>
+        <a href="https://example.com/draws" target="_blank" rel="noopener" class="block px-2 py-2 rounded text-matchyellow-400 hover:bg-matchyellow-400 hover:text-slate-900">Draws</a>
+        <a href="https://example.com/desks" target="_blank" rel="noopener" class="block px-2 py-2 rounded text-matchyellow-400 hover:bg-matchyellow-400 hover:text-slate-900">Virtual Tournament Desk</a>
+        <a href="https://example.com/on-courts" target="_blank" rel="noopener" class="block px-2 py-2 rounded text-matchyellow-400 hover:bg-matchyellow-400 hover:text-slate-900">On Courts</a>
+        <div class="text-matchyellow-400 font-bold text-xs uppercase tracking-wider mb-2 mt-4">More</div>
+        <a href="https://example.com/app" target="_blank" rel="noopener" class="block px-2 py-2 rounded text-matchyellow-400 hover:bg-matchyellow-400 hover:text-slate-900">Download App for Captains & Players</a>
+        <a href="registered_teams.html" class="block px-2 py-2 rounded text-matchyellow-400 hover:bg-matchyellow-400 hover:text-slate-900">Registered Teams</a>
+        <a href="https://example.com/standings" target="_blank" rel="noopener" class="block px-2 py-2 rounded text-matchyellow-400 hover:bg-matchyellow-400 hover:text-slate-900">Standings</a>
+        <a href="https://www.weather.gov/" target="_blank" rel="noopener" class="block px-2 py-2 rounded text-matchyellow-400 hover:bg-matchyellow-400 hover:text-slate-900">Weather</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="relative">
+    <!-- Sub Navigation -->
+    <nav class="sticky top-16 z-30 bg-gray-500 w-full">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center gap-6 text-sm font-medium py-3">
+          <a href="index.html#general-info" class="text-white hover:text-gray-200 font-semibold">Overview</a>
+          <a href="index.html#registration" class="text-white hover:text-gray-200 font-semibold">Registration</a>
+          <a href="index.html#about" class="text-white hover:text-gray-200 font-semibold">Entry Information</a>
+          <a href="index.html#sites" class="text-white hover:text-gray-200 font-semibold">Site</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Registered Teams Section -->
+    <section class="py-8">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="mb-8">
+          <h1 class="text-3xl font-bold text-slate-900 mb-2">Registered Teams</h1>
+          <p class="text-slate-600">View all registered teams and their rosters for the Spring Invitational 2025</p>
+        </div>
+
+        <!-- Division Filter -->
+        <div class="mb-6">
+          <div class="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+            <label for="divisionFilter" class="text-sm font-medium text-slate-700 whitespace-nowrap">Filter by Division:</label>
+            <select id="divisionFilter" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary bg-white text-slate-900 min-w-[200px]">
+              <option value="all">All Divisions</option>
+              <option value="12341">3.0 Men's</option>
+              <option value="12342">3.0 Women's</option>
+              <option value="12343">3.5 Men's</option>
+              <option value="12344">3.5 Women's</option>
+              <option value="12345">4.0 Men's</option>
+              <option value="12346">4.0 Women's</option>
+              <option value="12347">4.5 Men's</option>
+              <option value="12348">4.5 Women's</option>
+            </select>
+            <div class="text-sm text-slate-500">
+              <span id="teamCount">4 teams</span> registered
+            </div>
+          </div>
+        </div>
+
+        <!-- Teams List -->
+        <div class="space-y-4">
+          <!-- Team 1 -->
+          <div class="bg-white rounded-lg border border-slate-200 shadow-sm team-card" data-division_id="12343">
+            <button class="team-toggle w-full px-6 py-4 text-left hover:bg-slate-50 transition-colors" data-team="team1">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h3 class="text-lg font-semibold text-slate-900">Riverside Racers</h3>
+                  <p class="text-sm text-slate-600">Division: 3.5 Men's • Captain: Mike Johnson</p>
+                </div>
+                <svg class="team-arrow w-5 h-5 text-slate-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </div>
+            </button>
+            <div id="team1" class="team-details hidden px-6 pb-4">
+              <div class="border-t border-slate-200 pt-4">
+                <h4 class="font-semibold text-slate-900 mb-3">Team Roster</h4>
+                <div class="space-y-2">
+                  <div class="flex justify-between items-center py-2 px-3 bg-slate-50 rounded">
+                    <span class="font-medium">Mike Johnson</span>
+                    <div class="flex gap-4 text-sm text-slate-600">
+                      <span>Rating: 3.5</span>
+                      <span>Male</span>
+                    </div>
+                  </div>
+                  <div class="flex justify-between items-center py-2 px-3 bg-slate-50 rounded">
+                    <span class="font-medium">David Chen</span>
+                    <div class="flex gap-4 text-sm text-slate-600">
+                      <span>Rating: 3.5</span>
+                      <span>Male</span>
+                    </div>
+                  </div>
+                  <div class="flex justify-between items-center py-2 px-3 bg-slate-50 rounded">
+                    <span class="font-medium">Robert Martinez</span>
+                    <div class="flex gap-4 text-sm text-slate-600">
+                      <span>Rating: 3.5</span>
+                      <span>Male</span>
+                    </div>
+                  </div>
+                  <div class="flex justify-between items-center py-2 px-3 bg-slate-50 rounded">
+                    <span class="font-medium">James Wilson</span>
+                    <div class="flex gap-4 text-sm text-slate-600">
+                      <span>Rating: 3.5</span>
+                      <span>Male</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Team 2 -->
+          <div class="bg-white rounded-lg border border-slate-200 shadow-sm team-card" data-division_id="12346">
+            <button class="team-toggle w-full px-6 py-4 text-left hover:bg-slate-50 transition-colors" data-team="team2">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h3 class="text-lg font-semibold text-slate-900">Thunder Bolts</h3>
+                  <p class="text-sm text-slate-600">Division: 4.0 Women's • Captain: Sarah Davis</p>
+                </div>
+                <svg class="team-arrow w-5 h-5 text-slate-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </div>
+            </button>
+            <div id="team2" class="team-details hidden px-6 pb-4">
+              <div class="border-t border-slate-200 pt-4">
+                <h4 class="font-semibold text-slate-900 mb-3">Team Roster</h4>
+                <div class="space-y-2">
+                  <div class="flex justify-between items-center py-2 px-3 bg-slate-50 rounded">
+                    <span class="font-medium">Sarah Davis</span>
+                    <div class="flex gap-4 text-sm text-slate-600">
+                      <span>Rating: 4.0</span>
+                      <span>Female</span>
+                    </div>
+                  </div>
+                  <div class="flex justify-between items-center py-2 px-3 bg-slate-50 rounded">
+                    <span class="font-medium">Lisa Thompson</span>
+                    <div class="flex gap-4 text-sm text-slate-600">
+                      <span>Rating: 4.0</span>
+                      <span>Female</span>
+                    </div>
+                  </div>
+                  <div class="flex justify-between items-center py-2 px-3 bg-slate-50 rounded">
+                    <span class="font-medium">Jennifer Lee</span>
+                    <div class="flex gap-4 text-sm text-slate-600">
+                      <span>Rating: 4.0</span>
+                      <span>Female</span>
+                    </div>
+                  </div>
+                  <div class="flex justify-between items-center py-2 px-3 bg-slate-50 rounded">
+                    <span class="font-medium">Amanda Rodriguez</span>
+                    <div class="flex gap-4 text-sm text-slate-600">
+                      <span>Rating: 4.0</span>
+                      <span>Female</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Team 3 -->
+          <div class="bg-white rounded-lg border border-slate-200 shadow-sm team-card" data-division_id="12347">
+            <button class="team-toggle w-full px-6 py-4 text-left hover:bg-slate-50 transition-colors" data-team="team3">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h3 class="text-lg font-semibold text-slate-900">Ace Masters</h3>
+                  <p class="text-sm text-slate-600">Division: 4.5 Men's • Captain: Tom Anderson</p>
+                </div>
+                <svg class="team-arrow w-5 h-5 text-slate-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </div>
+            </button>
+            <div id="team3" class="team-details hidden px-6 pb-4">
+              <div class="border-t border-slate-200 pt-4">
+                <h4 class="font-semibold text-slate-900 mb-3">Team Roster</h4>
+                <div class="space-y-2">
+                  <div class="flex justify-between items-center py-2 px-3 bg-slate-50 rounded">
+                    <span class="font-medium">Tom Anderson</span>
+                    <div class="flex gap-4 text-sm text-slate-600">
+                      <span>Rating: 4.5</span>
+                      <span>Male</span>
+                    </div>
+                  </div>
+                  <div class="flex justify-between items-center py-2 px-3 bg-slate-50 rounded">
+                    <span class="font-medium">Kevin Brown</span>
+                    <div class="flex gap-4 text-sm text-slate-600">
+                      <span>Rating: 4.5</span>
+                      <span>Male</span>
+                    </div>
+                  </div>
+                  <div class="flex justify-between items-center py-2 px-3 bg-slate-50 rounded">
+                    <span class="font-medium">Mark Taylor</span>
+                    <div class="flex gap-4 text-sm text-slate-600">
+                      <span>Rating: 4.5</span>
+                      <span>Male</span>
+                    </div>
+                  </div>
+                  <div class="flex justify-between items-center py-2 px-3 bg-slate-50 rounded">
+                    <span class="font-medium">Chris White</span>
+                    <div class="flex gap-4 text-sm text-slate-600">
+                      <span>Rating: 4.5</span>
+                      <span>Male</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Team 4 -->
+          <div class="bg-white rounded-lg border border-slate-200 shadow-sm team-card" data-division_id="12342">
+            <button class="team-toggle w-full px-6 py-4 text-left hover:bg-slate-50 transition-colors" data-team="team4">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h3 class="text-lg font-semibold text-slate-900">Net Warriors</h3>
+                  <p class="text-sm text-slate-600">Division: 3.0 Women's • Captain: Maria Garcia</p>
+                </div>
+                <svg class="team-arrow w-5 h-5 text-slate-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </div>
+            </button>
+            <div id="team4" class="team-details hidden px-6 pb-4">
+              <div class="border-t border-slate-200 pt-4">
+                <h4 class="font-semibold text-slate-900 mb-3">Team Roster</h4>
+                <div class="space-y-2">
+                  <div class="flex justify-between items-center py-2 px-3 bg-slate-50 rounded">
+                    <span class="font-medium">Maria Garcia</span>
+                    <div class="flex gap-4 text-sm text-slate-600">
+                      <span>Rating: 3.0</span>
+                      <span>Female</span>
+                    </div>
+                  </div>
+                  <div class="flex justify-between items-center py-2 px-3 bg-slate-50 rounded">
+                    <span class="font-medium">Rachel Kim</span>
+                    <div class="flex gap-4 text-sm text-slate-600">
+                      <span>Rating: 3.0</span>
+                      <span>Female</span>
+                    </div>
+                  </div>
+                  <div class="flex justify-between items-center py-2 px-3 bg-slate-50 rounded">
+                    <span class="font-medium">Nicole Smith</span>
+                    <div class="flex gap-4 text-sm text-slate-600">
+                      <span>Rating: 3.0</span>
+                      <span>Female</span>
+                    </div>
+                  </div>
+                  <div class="flex justify-between items-center py-2 px-3 bg-slate-50 rounded">
+                    <span class="font-medium">Jessica Wong</span>
+                    <div class="flex gap-4 text-sm text-slate-600">
+                      <span>Rating: 3.0</span>
+                      <span>Female</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-200 bg-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <p class="text-sm text-slate-500">© 2025 Riverside Athletics. All rights reserved.</p>
+      <div class="flex items-center gap-4 text-sm">
+        <a href="index.html" class="text-slate-600 hover:text-primary">Back to Tournament Info</a>
+        <a href="mailto:info@example.com" class="text-slate-600 hover:text-primary">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(function() {
+      $('#menuButton').on('click', function() {
+        $('#mobileMenu').toggleClass('hidden');
+      });
+
+      $('#mobileMenu a').on('click', function() {
+        $('#mobileMenu').addClass('hidden');
+      });
+
+      // Team toggle functionality
+      $('.team-toggle').on('click', function() {
+        const teamId = $(this).data('team');
+        const teamDetails = $('#' + teamId);
+        const arrow = $(this).find('.team-arrow');
+        
+        // Toggle the team details
+        teamDetails.toggleClass('hidden');
+        
+        // Rotate the arrow
+        arrow.toggleClass('rotate-180');
+      });
+
+      // Division filter functionality
+      $('#divisionFilter').on('change', function() {
+        const selectedFilter = $(this).val();
+        const teamCards = $('.team-card');
+        let visibleCount = 0;
+
+        teamCards.each(function() {
+          const teamDivisionId = $(this).attr('data-division_id');
+          let shouldShow = false;
+          
+          if (selectedFilter === 'all') {
+            shouldShow = true;
+          } else {
+            // Match by division ID (compare as strings)
+            shouldShow = teamDivisionId === selectedFilter;
+          }
+          
+          if (shouldShow) {
+            $(this).show();
+            visibleCount++;
+          } else {
+            $(this).hide();
+            // Close any open details for hidden teams
+            const teamId = $(this).find('.team-toggle').data('team');
+            $('#' + teamId).addClass('hidden');
+            $(this).find('.team-arrow').removeClass('rotate-180');
+          }
+        });
+
+        // Update team count
+        $('#teamCount').text(visibleCount + ' team' + (visibleCount !== 1 ? 's' : ''));
+      });
+
+      // Initialize with all teams visible
+      $('#divisionFilter').trigger('change');
+    });
+  </script>
+</body>
+</html>

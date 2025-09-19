@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tournament Draws Template</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsrender@1.0.14/jsrender.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .tournament-brackets {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+        }
+        .bracket {
+            display: flex;
+            flex-direction: column;
+            min-width: 200px;
+        }
+        .match {
+            display: flex;
+            flex-direction: column;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            background: #f9f9f9;
+        }
+        .player {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            margin: 4px 0;
+            border-radius: 4px;
+            background: white;
+        }
+        .player.top {
+            border-left: 4px solid #007bff;
+        }
+        .player.bottom {
+            border-left: 4px solid #28a745;
+        }
+        .player[data-winner="true"] {
+            background: #d4edda;
+            border-color: #28a745;
+        }
+        .player-spacer {
+            height: 10px;
+        }
+        .playername {
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        .seed {
+            background: #ffc107;
+            color: #000;
+            padding: 2px 6px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin-left: 8px;
+        }
+        .schedtime {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+            padding: 4px 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+        }
+        .cq-spacer {
+            height: 20px;
+            background: transparent;
+        }
+        .bracket-cq {
+            border-left: 4px solid #dc3545;
+        }
+        .bracket-rr {
+            border-left: 4px solid #17a2b8;
+        }
+    </style>
+</head>
+<body>
+    <div id="drawcontainer"></div>
+
+    <!-- Debug Template -->
+    <script id="debugTemplate" type="text/x-jsrender">
+        <div>
+            <h3>Debug Info:</h3>
+            <p>roundMatchUps type: {{:typeof roundMatchUps}}</p>
+            <p>roundMatchUps keys: {{:Object.keys(roundMatchUps).join(', ')}}</p>
+            {{props roundMatchUps}}
+                <p>Key: {{:#key}}, Data type: {{:typeof #data}}, Length: {{:#data ? #data.length : 'undefined'}}</p>
+            {{/props}}
+        </div>
+    </script>
+
+    <!-- JSRender Template for Tournament Draws -->
+    <script id="drawsTemplate" type="text/x-jsrender">
+        <div class="row tournament-brackets">
+            {{props roundMatchUps}}
+                {{if #data && #data.length > 0}}
+                    <ul class="container col-sm-12 col-md bracket bracket-{{:#key}} {{if #data[0].roundName.indexOf('-Q') > -1}}bracket-cq{{/if}} {{if #data[0].roundName.match(/^R\d$/)}}bracket-rr{{/if}}" 
+                        data-round="{{:#data[0].roundName}}" data-key="{{:#key}}">
+                        
+                        {{for #data}}
+                            {{if matchUpStatus != 'BYE' || !#parent.data[0].roundName.match(/^R\d$/)}}
+                                <li class="match {{if sides[0].participantId == '' || sides[1].participantId == ''}}byematch{{/if}}">
+                                    
+                                    {{for sides}}
+                                        {{if participant}}
+                                            <!-- Player with participant data -->
+                                            <div class="player-spacer"></div>
+                                            <div class="player {{if displaySideNumber == '1'}}top{{else}}bottom flipped{{/if}}" 
+                                                 {{if (displaySideNumber == '1' && #parent.data.winningSide == 1) || (displaySideNumber == '2' && #parent.data.winningSide == 2) || (#parent.data.matchUpStatus == 'BYE' && bye !== true)}}data-winner="true"{{/if}}
+                                                 {{if sourceDrawPositionRange}}data-drawposition="{{:sourceDrawPositionRange}}"{{else}}{{if #parent.parent.index == 0}}data-drawposition="{{:drawPosition}}"{{/if}}{{/if}}>
+                                                
+                                                <span class="player_icon">
+                                                    {{if (displaySideNumber == '1' && #parent.data.winningSide == 1) || (displaySideNumber == '2' && #parent.data.winningSide == 2) || (#parent.data.matchUpStatus == 'BYE' && bye !== true)}}
+                                                        <i class="fal fa-smile fa-lg bg-warning rounded-circle"></i>
+                                                    {{else}}
+                                                        <i class="fas fa-user-circle fa-lg"></i>
+                                                    {{/if}}
+                                                </span>
+                                                
+                                                <span class="playername" 
+                                                      {{if participantId}}data-stID="{{:participantId}}"{{/if}}
+                                                      {{if seedNumber}}data-seednumber="{{:seedNumber}}"{{/if}}>
+                                                    
+                                                    <span class="nowrap" style="cursor:pointer" onclick="openTennislinkTeamPage('{{:participant.participantId}}');return false">
+                                                        {{:participant.participantName}}
+                                                        {{if seedNumber}}
+                                                            <span class="seed">{{:seedNumber}}</span>
+                                                        {{/if}}
+                                                    </span>
+                                                </span>
+                                            </div>
+                                            
+                                            {{if sideNumber == '1'}}
+                                                <div class="schedtime schedtime-{{:#parent.parent.parent.index + 1}}" 
+                                                     {{if #parent.data.schedule.scheduledDate}}
+                                                         {{if #parent.data.matchUpStatus == 'approved' || #parent.data.matchUpStatus == 'completed'}}
+                                                             class="matchupbtncont schedtime schedtime-{{:#parent.parent.parent.index + 1}} ts1"
+                                                             data-matchupid="{{:#parent.data.matchUpId}}"
+                                                             data-matchformat="{{:#parent.parent.parent.parent.data.matchUpFormat}}"
+                                                         {{else}}
+                                                             class="schedtime schedtime-{{:#parent.parent.parent.index + 1}} ts2"
+                                                             data-matchformat="{{:#parent.parent.parent.parent.data.matchUpFormat}}"
+                                                         {{/if}}
+                                                         data-sched="{{:#parent.data.schedule.scheduledDate}} {{:#parent.data.schedule.scheduledTime}} {{:#parent.data.schedule.venueId}}"
+                                                         {{:#parent.data.schedule.scheduledDate}} {{:#parent.data.schedule.scheduledTime}} {{:#parent.data.schedule.venueId}}
+                                                     {{else}}
+                                                         class="schedtime schedtime-{{:#parent.parent.parent.index + 1}} ts3"
+                                                     {{/if}}></div>
+                                            {{/if}}
+                                            
+                                        {{else}}
+                                            <!-- Player without participant data (TBD) -->
+                                            <div class="player-spacer"></div>
+                                            <div class="player {{if displaySideNumber == '1' || displaySideNumber == undefined}}top{{else}}bottom flipped{{/if}}"
+                                                 {{if sourceDrawPositionRange}}data-drawposition="{{:sourceDrawPositionRange}}"{{else}}{{if #parent.parent.index == 0}}data-drawposition="{{:drawPosition}}"{{/if}}{{/if}}>
+                                                
+                                                {{if bye == true}}
+                                                    <span class="player_icon"><i class="fas fa-forward fa-lg"></i></span>
+                                                    <span class="playername">BYE</span>
+                                                {{else}}
+                                                    <span class="player_icon"><i class="fas fa-user-circle fa-lg"></i></span>
+                                                    <span class="playername">TBD</span>
+                                                {{/if}}
+                                            </div>
+                                            
+                                            {{if sideNumber == '1'}}
+                                                <div class="schedtime schedtime-{{:#parent.parent.parent.index + 1}}"
+                                                     {{if #parent.data.schedule.scheduledDate}}
+                                                         data-sched="{{:#parent.data.schedule.scheduledDate}} {{:#parent.data.schedule.scheduledTime}} {{:#parent.data.schedule.venueId}}"
+                                                         {{:#parent.data.schedule.scheduledDate}} {{:#parent.data.schedule.scheduledTime}} {{:#parent.data.schedule.venueId}}
+                                                     {{/if}}></div>
+                                            {{else sideNumber == undefined}}
+                                                {{if #index == 0}}
+                                                    <div class="schedtime schedtime-{{:#parent.parent.parent.index + 1}}"></div>
+                                                {{/if}}
+                                            {{/if}}
+                                        {{/if}}
+                                        
+                                        {{if #index != 0}}
+                                            <div class="player-spacer"></div>
+                                        {{/if}}
+                                    {{/for}}
+                                </li>
+                            {{/if}}
+                        {{/for}}
+                    </ul>
+                {{/if}}
+            {{/props}}
+            
+            <!-- Winner bracket (if tournament is completed) -->
+            {{if roundMatchUps["5"] && roundMatchUps["5"][0] && (roundMatchUps["5"][0].matchUpStatus == 'COMPLETED' || 
+                  roundMatchUps["5"][0].matchUpStatus == 'WALKOVER' || 
+                  roundMatchUps["5"][0].matchUpStatus == 'RETIRED')}}
+                {{if !roundMatchUps["1"][0].roundName.match(/^R\d$/)}}
+                    <ul class="container col-sm-12 col-md bracket bracket-winner" 
+                        data-round="WINNER" data-key="winner">
+                        <li class="match">
+                            <div class="player-spacer"></div>
+                            <div class="player" data-winner="true">
+                                <span class="player_icon">
+                                    <i class="fal fa-smile fa-lg bg-warning rounded-circle"></i>
+                                </span>
+                                <span class="playername">
+                                    <span class="nowrap">Tournament Winner</span>
+                                </span>
+                            </div>
+                            <div class="player-spacer"></div>
+                        </li>
+                    </ul>
+                {{/if}}
+            {{/if}}
+            
+            <!-- Cancelled tournament -->
+            {{if roundMatchUps["5"] && roundMatchUps["5"][0] && roundMatchUps["5"][0].matchUpStatus == 'CANCELLED'}}
+                {{if !roundMatchUps["1"][0].roundName.match(/^R\d$/)}}
+                    <ul class="container col-sm-12 col-md bracket bracket-cancelled" 
+                        data-round="CANCELLED" data-key="cancelled">
+                        <li class="match">
+                            <div class="player-spacer"></div>
+                            <div class="player">
+                                <span class="playername" data-score="CANCELLED">
+                                    <span class="nowrap">Tournament Cancelled</span>
+                                </span>
+                            </div>
+                            <div class="player-spacer"></div>
+                        </li>
+                    </ul>
+                {{/if}}
+            {{/if}}
+            
+            <div class="container col-md d-none d-sm-flex grow-2"></div>
+        </div>
+    </script>
+
+    <script>
+        // Helper function to get venues (converted from original JS)
+        function getVenues(objDraw) {
+            var venueArray = {};
+            if (objDraw && objDraw.drawsData && objDraw.drawsData[0] && objDraw.drawsData[0].eventVenues) {
+                objDraw.drawsData[0].eventVenues.forEach(function(venue) {
+                    venueArray[venue.venueId] = venue.venueName;
+                });
+            }
+            return venueArray;
+        }
+
+        // Helper function to get venues from the new data structure
+        function getVenuesFromEventData(eventData) {
+            var venueArray = {};
+            if (eventData && eventData.venuesData) {
+                eventData.venuesData.forEach(function(venue) {
+                    venueArray[venue.venueId] = venue.venueName;
+                });
+            }
+            return venueArray;
+        }
+
+        // Function to render draws using JSRender template
+        function generateBracketHTML(objDraw, structIndex) {
+            if (!objDraw || !objDraw.schedule || !objDraw.schedule.data || !objDraw.schedule.data.tournamentPublicEventData || !objDraw.schedule.data.tournamentPublicEventData.eventData) {
+                console.error('Invalid data structure. Expected: objDraw.schedule.data.tournamentPublicEventData.eventData');
+                return;
+            }
+            
+            var eventData = objDraw.schedule.data.tournamentPublicEventData.eventData;
+            
+            if (!eventData.drawsData || !eventData.drawsData[0]) {
+                console.error('No drawsData found in eventData');
+                return;
+            }
+            
+            if (!structIndex || structIndex == '') {
+                structIndex = 0;
+            }
+            
+            // Prepare data for template - use the actual data structure
+            var templateData = {
+                roundMatchUps: eventData.drawsData[0].structures[structIndex].roundMatchUps,
+                matchUpFormat: eventData.drawsData[0].matchUpFormat,
+                venueArray: getVenuesFromEventData(eventData)
+            };
+            
+            // Debug: Log the data structure
+            console.log('Template data:', templateData);
+            console.log('roundMatchUps keys:', Object.keys(templateData.roundMatchUps));
+            console.log('roundMatchUps["1"]:', templateData.roundMatchUps["1"]);
+            
+            // First render debug template
+            var debugTemplate = $.templates("#debugTemplate");
+            var debugHtml = debugTemplate.render(templateData);
+            
+            // Then render main template
+            var template = $.templates("#drawsTemplate");
+            var html = template.render(templateData);
+            
+            // Insert both into container
+            $('#drawcontainer').html(debugHtml + html);
+        }
+
+        // Sample data structure for testing
+        var sampleDrawData = {
+            drawsData: [{
+                matchUpFormat: "BEST_OF_3_SETS",
+                eventVenues: [
+                    { venueId: "1", venueName: "Main Court" },
+                    { venueId: "2", venueName: "Court 2" }
+                ],
+                structures: [{
+                    roundMatchUps: [
+                        [
+                            {
+                                roundName: "R1",
+                                matchUpId: "1",
+                                matchUpStatus: "COMPLETED",
+                                matchUpType: "SINGLES",
+                                winningSide: 1,
+                                score: { scoreStringSide1: "6-4, 6-2" },
+                                schedule: {
+                                    scheduledDate: "2024-01-15",
+                                    scheduledTime: "10:00",
+                                    venueId: "1"
+                                },
+                                sides: [
+                                    {
+                                        sideNumber: "1",
+                                        displaySideNumber: "1",
+                                        drawPosition: "1",
+                                        participantId: "p1",
+                                        seedNumber: "1",
+                                        participant: {
+                                            participantId: "p1",
+                                            participantName: "John Smith",
+                                            person: {
+                                                addresses: [{ city: "New York", state: "NY" }]
+                                            }
+                                        }
+                                    },
+                                    {
+                                        sideNumber: "2", 
+                                        displaySideNumber: "2",
+                                        drawPosition: "2",
+                                        participantId: "p2",
+                                        participant: {
+                                            participantId: "p2",
+                                            participantName: "Jane Doe",
+                                            person: {
+                                                addresses: [{ city: "Los Angeles", state: "CA" }]
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    ]
+                }]
+            }]
+        };
+
+        // Function to load JSON data and render
+        function loadDrawData() {
+            $.getJSON('sample_draw_flight.json', function(data) {
+                console.log('Loaded data:', data);
+                generateBracketHTML(data, 0);
+            }).fail(function(jqxhr, textStatus, error) {
+                console.error('Error loading JSON:', textStatus, error);
+                console.log('Trying with sample data instead...');
+                generateBracketHTML(sampleDrawData, 0);
+            });
+        }
+
+        // Example usage
+        $(document).ready(function() {
+            // Load the actual JSON data
+            loadDrawData();
+            
+            // Uncomment to test with sample data instead
+            // generateBracketHTML(sampleDrawData, 0);
+        });
+    </script>
+</body>
+</html>

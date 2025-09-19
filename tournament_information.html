@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tournament Info</title>
+  <meta name="description" content="Official tournament information: dates, locations, registration, draws, teams, results, weather.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="tournament_information.css" rel="stylesheet">  
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased">
+  <!-- Header -->
+  <header class="sticky top-0 z-40 bg-matchnavy-800">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 md:h-16 sm:h-20">
+        <a href="#top" class="flex items-center gap-2 group w-full sm:w-auto">
+          <div class="flex flex-col sm:flex-row items-center gap-1 sm:gap-2 w-full sm:w-auto">
+            <span class="inline-flex h-9 w-32 sm:h-9 sm:w-32 h-12 w-full items-center justify-center rounded-md shadow-sporty group-hover:opacity-80 transition -mt-2 -mb-2 sm:mt-0 sm:mb-0" style="background-image: url(https://s3.amazonaws.com/3738/17741/1617044998_usta-logo.png); background-size: contain; background-repeat: no-repeat; background-position: center;"></span>
+            <span class="font-extrabold tracking-tight text-white text-sm sm:text-base text-center sm:text-left whitespace-nowrap overflow-hidden text-ellipsis max-w-[300px] sm:max-w-none">[Section/District Name] Tournament Information</span>
+          </div>
+        </a>
+        <nav class="hidden md:flex items-center gap-6 text-sm font-medium bg-matchyellow-400 px-4 py-2 rounded-lg">
+          <a href="#general-info" class="text-slate-900 hover:text-slate-700 font-semibold">General Info</a>
+          <a href="https://example.com/draws" target="_blank" rel="noopener" class="text-slate-900 hover:text-slate-700 font-semibold">Draws</a>
+          <a href="https://example.com/desks" target="_blank" rel="noopener" class="text-slate-900 hover:text-slate-700 font-semibold">Virtual Tournament Desk</a>
+          <a href="https://example.com/on-courts" target="_blank" rel="noopener" class="text-slate-900 hover:text-slate-700 font-semibold">On Courts</a>
+          <div class="relative group">
+            <button class="text-slate-900 hover:text-slate-700 font-semibold flex items-center gap-1">
+              More
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+              </svg>
+            </button>
+            <div class="absolute top-full left-0 mt-1 w-48 bg-white rounded-lg shadow-lg border border-slate-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+              <div class="py-2">
+                <a href="https://example.com/app" target="_blank" rel="noopener" class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">Download App for Captains & Players</a>
+                <a href="https://example.com/teams" target="_blank" rel="noopener" class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">Registered Teams</a>
+                <a href="https://example.com/standings" target="_blank" rel="noopener" class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">Standings</a>
+                <a href="https://www.weather.gov/" target="_blank" rel="noopener" class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">Weather</a>
+              </div>
+            </div>
+          </div>
+        </nav>
+        <button id="menuButton" class="md:hidden inline-flex items-center justify-center p-2 rounded-md border border-matchyellow-400 text-matchyellow-400 hover:bg-matchyellow-400 hover:text-slate-900" aria-label="Open menu">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 5h14a1 1 0 100-2H3a1 1 0 100 2zm14 4H3a1 1 0 100 2h14a1 1 0 100-2zm0 6H3a1 1 0 100 2h14a1 1 0 100-2z" clip-rule="evenodd"/></svg>
+        </button>
+      </div>
+    </div>
+    <div id="mobileMenu" class="md:hidden hidden border-t border-matchyellow-400 bg-[#01286a]">
+      <div class="px-4 py-3 space-y-2 text-sm font-medium">
+        <div class="text-matchyellow-400 font-bold text-xs uppercase tracking-wider mb-2">Main Navigation</div>
+        <a href="#general-info" class="block px-2 py-2 rounded text-matchyellow-400 hover:bg-matchyellow-400 hover:text-slate-900">General Info</a>
+        <a href="https://example.com/draws" target="_blank" rel="noopener" class="block px-2 py-2 rounded text-matchyellow-400 hover:bg-matchyellow-400 hover:text-slate-900">Draws</a>
+        <a href="https://example.com/desks" target="_blank" rel="noopener" class="block px-2 py-2 rounded text-matchyellow-400 hover:bg-matchyellow-400 hover:text-slate-900">Virtual Tournament Desk</a>
+        <a href="https://example.com/on-courts" target="_blank" rel="noopener" class="block px-2 py-2 rounded text-matchyellow-400 hover:bg-matchyellow-400 hover:text-slate-900">On Courts</a>
+        <div class="text-matchyellow-400 font-bold text-xs uppercase tracking-wider mb-2 mt-4">More</div>
+        <a href="https://example.com/app" target="_blank" rel="noopener" class="block px-2 py-2 rounded text-matchyellow-400 hover:bg-matchyellow-400 hover:text-slate-900">Download App for Captains & Players</a>
+        <a href="https://example.com/teams" target="_blank" rel="noopener" class="block px-2 py-2 rounded text-matchyellow-400 hover:bg-matchyellow-400 hover:text-slate-900">Registered Teams</a>
+        <a href="https://example.com/standings" target="_blank" rel="noopener" class="block px-2 py-2 rounded text-matchyellow-400 hover:bg-matchyellow-400 hover:text-slate-900">Standings</a>
+        <a href="https://www.weather.gov/" target="_blank" rel="noopener" class="block px-2 py-2 rounded text-matchyellow-400 hover:bg-matchyellow-400 hover:text-slate-900">Weather</a>
+      </div>
+    </div>
+  </header>
+
+  
+
+  <!-- Hero / General Info -->
+  <main id="top" class="relative">
+    <!-- Sub Navigation -->
+    <nav class="sticky top-16 z-30 bg-gray-500 w-full">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center gap-6 text-sm font-medium py-3">
+          <a href="#general-info" class="text-white hover:text-gray-200 font-semibold">Overview</a>
+          <a href="#registration" class="text-white hover:text-gray-200 font-semibold">Registration</a>
+          <a href="#about" class="text-white hover:text-gray-200 font-semibold">Entry Information</a>
+          <a href="#sites" class="text-white hover:text-gray-200 font-semibold">Site</a>
+        </div>
+      </div>
+    </nav>
+    <section id="general-info" class="pt-2 pb-2">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-3 gap-6 items-stretch">
+          <div class="lg:col-span-2 bg-gradient-to-br from-brand-600 to-brand-800 rounded-2xl text-white p-6 sm:p-8 shadow-sporty">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="inline-flex items-center gap-1 text-xs uppercase tracking-wider bg-white/15 px-2 py-1 rounded">
+                <span class="w-1.5 h-1.5 rounded-full bg-lime-300"></span>
+                Upcoming Event
+              </span>
+            </div>
+            <h1 class="text-3xl sm:text-4xl font-extrabold leading-tight">Spring Invitational 2025</h1>
+            <p class="mt-2 text-white/90 text-base">May 16–18, 2025 • Main Site: Riverside Sports Complex</p>
+            <div class="mt-6 grid sm:grid-cols-2 gap-4 text-sm">
+              <div class="bg-white/10 rounded-lg p-4">
+                <div class="text-white/70">Location</div>
+                <div class="font-semibold">Riverside Sports Complex, 123 River Rd, City, ST</div>
+              </div>
+              <div class="bg-white/10 rounded-lg p-4">
+                <div class="text-white/70">Additional Sites</div>
+                <div class="font-semibold">North Field Park • East Arena</div>
+              </div>
+            </div>
+          </div>
+          <div class="bg-white rounded-2xl p-6 shadow-sporty border border-slate-200">
+            <h3 class="hidden lg:block text-lg font-bold text-slate-900 mb-4">Quick Links</h3>
+            <div class="space-y-1.5 lg:space-y-2">
+              <a href="https://example.com/app" target="_blank" rel="noopener" class="block w-full text-center rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 lg:py-2 text-sm font-medium text-slate-900 hover:bg-brand-50 hover:border-brand-200 transition">
+                Download App for Captains & Players
+              </a>
+              <a href="https://example.com/teams" target="_blank" rel="noopener" class="block w-full text-center rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 lg:py-2 text-sm font-medium text-slate-900 hover:bg-brand-50 hover:border-brand-200 transition">
+                Registered Teams
+              </a>
+              <a href="https://example.com/draws" target="_blank" rel="noopener" class="block w-full text-center rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm font-medium text-slate-900 hover:bg-brand-50 hover:border-brand-200 transition lg:hidden">
+                Draws
+              </a>
+              <a href="https://example.com/desks" target="_blank" rel="noopener" class="block w-full text-center rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm font-medium text-slate-900 hover:bg-brand-50 hover:border-brand-200 transition lg:hidden">
+                Virtual Tournament Desk
+              </a>
+              <a href="https://example.com/on-courts" target="_blank" rel="noopener" class="block w-full text-center rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm font-medium text-slate-900 hover:bg-brand-50 hover:border-brand-200 transition lg:hidden">
+                On Courts
+              </a>
+              <a href="https://example.com/standings" target="_blank" rel="noopener" class="block w-full text-center rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 lg:py-2 text-sm font-medium text-slate-900 hover:bg-brand-50 hover:border-brand-200 transition">
+                Standings
+              </a>
+              <a href="https://www.weather.gov/" target="_blank" rel="noopener" class="block w-full text-center rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 lg:py-2 text-sm font-medium text-slate-900 hover:bg-brand-50 hover:border-brand-200 transition">
+                Weather
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+    <!-- Registration Info -->
+    <section id="registration" class="py-2 sm:py-3">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 bg-white rounded-2xl p-6 shadow-sporty border border-slate-200">
+            <h2 class="text-xl font-bold text-slate-900">Registration</h2>
+            <dl class="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
+              <div class="p-3 rounded-lg bg-slate-50 border border-slate-200">
+                <dt class="text-slate-600">Opens</dt>
+                <dd class="font-semibold text-slate-900">Jan 15, 2025 • 9:00 AM</dd>
+              </div>
+              <div class="p-3 rounded-lg bg-slate-50 border border-slate-200">
+                <dt class="text-slate-600">Closes</dt>
+                <dd class="font-semibold text-slate-900">May 1, 2025 • 11:59 PM</dd>
+              </div>
+              <div class="p-3 rounded-lg bg-slate-50 border border-slate-200">
+                <dt class="text-slate-600">Price</dt>
+                <dd class="font-semibold text-slate-900">$495 per team</dd>
+              </div>
+            </dl>
+            <a href="https://example.com/register" target="_blank" rel="noopener" class="mt-4 inline-flex items-center justify-center w-full px-4 py-2 rounded-md bg-brand-600 text-white font-semibold shadow hover:bg-brand-700">Go to Registration</a>
+          </div>
+          <div class="bg-white rounded-2xl p-6 shadow-sporty border border-slate-200">
+            <h2 class="text-xl font-bold text-slate-900 mb-3">Contact Information</h2>
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-10 h-10 rounded-full bg-brand-100 flex items-center justify-center">
+                <span class="text-brand-600 font-bold">AM</span>
+              </div>
+              <div>
+                <h3 class="font-semibold text-slate-900">Alex Morgan</h3>
+                <p class="text-sm text-slate-600">Tournament Director</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-2 text-sm">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-400" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+              </svg>
+              <a class="text-brand-700 hover:underline" href="mailto:director@example.com">director@example.com</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- External Links Cards -->
+
+    <!-- Tournament Description -->
+    <section id="about" class="py-2 sm:py-3">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-white rounded-2xl p-6 shadow-sporty border border-slate-200">
+          <h2 class="text-xl font-bold text-slate-900">Entry Information</h2>
+          <p class="mt-2 text-sm text-slate-700">The Spring Invitational brings together top regional teams for a weekend of high-level competition across multiple sites. Expect professional officials, athletic trainers on-site, and a great experience for athletes and families.</p>
+          <ul class="mt-4 space-y-2 text-sm text-slate-700 list-disc list-inside">
+            <li>Minimum 3-game guarantee</li>
+            <li>Certified referees</li>
+            <li>On-site medical staff</li>
+            <li>Concessions and vendors</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tournament Sites -->
+    <section id="sites" class="pt-2 pb-16">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-xl font-bold text-slate-900 mb-2">Tournament Sites</h2>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="bg-white rounded-2xl p-6 shadow-sporty border border-slate-200">
+            <div class="flex items-start gap-3 mb-4">
+              <div class="w-10 h-10 rounded-lg bg-brand-100 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-brand-600" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+              <div class="flex-1">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="inline-flex items-center gap-1 text-xs uppercase tracking-wider bg-brand-100 text-brand-700 px-1.5 py-0.5 rounded">Main Site: RSC</span>
+                </div>
+                <h4 class="font-medium text-slate-900">Riverside Sports Complex</h4>
+                <p class="text-sm text-slate-600 mt-1">123 River Road<br>Riverside, ST 12345</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="bg-white rounded-2xl p-6 shadow-sporty border border-slate-200">
+            <div class="flex items-start gap-3 mb-4">
+              <div class="w-10 h-10 rounded-lg bg-brand-100 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-brand-600" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+              <div class="flex-1">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="inline-flex items-center gap-1 text-xs uppercase tracking-wider bg-brand-100 text-brand-700 px-1.5 py-0.5 rounded">NFP</span>
+                </div>
+                <h4 class="font-medium text-slate-900">North Field Park</h4>
+                <p class="text-sm text-slate-600 mt-1">456 North Avenue<br>Riverside, ST 12345</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="bg-white rounded-2xl p-6 shadow-sporty border border-slate-200">
+            <div class="flex items-start gap-3 mb-4">
+              <div class="w-10 h-10 rounded-lg bg-brand-100 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-brand-600" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+              <div class="flex-1">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="inline-flex items-center gap-1 text-xs uppercase tracking-wider bg-brand-100 text-brand-700 px-1.5 py-0.5 rounded">EAC</span>
+                </div>
+                <h4 class="font-medium text-slate-900">East Arena Complex</h4>
+                <p class="text-sm text-slate-600 mt-1">789 East Boulevard<br>Riverside, ST 12345</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-200 bg-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <p class="text-sm text-slate-500">© 2025 Riverside Athletics. All rights reserved.</p>
+      <div class="flex items-center gap-4 text-sm">
+        <a href="#top" class="text-slate-600 hover:text-brand-700">Back to top</a>
+        <a href="mailto:info@example.com" class="text-slate-600 hover:text-brand-700">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(function() {
+      $('#menuButton').on('click', function() {
+        $('#mobileMenu').toggleClass('hidden');
+      });
+
+      $('#mobileMenu a').on('click', function() {
+        $('#mobileMenu').addClass('hidden');
+      });
+
+      $('a[href^="#"]').on('click', function(e) {
+        var target = $(this.getAttribute('href'));
+        if (target.length) {
+          e.preventDefault();
+          var headerHeight = $('header').outerHeight() || 0;
+          var subNavHeight = $('nav.bg-gray-500').outerHeight() || 0;
+          var totalOffset = headerHeight + subNavHeight;
+          $('html, body').animate({ scrollTop: target.offset().top - totalOffset }, 400);
+        }
+      });
+
+      const $toTop = $('<button/>', {
+        id: 'toTop',
+        class: 'fixed bottom-5 right-5 z-40 hidden rounded-full bg-brand-600 text-white p-3 shadow-sporty hover:bg-brand-700',
+        html: '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3.293 11.707a1 1 0 010-1.414l6-6a1 1 0 011.414 0l6 6a1 1 0 01-1.414 1.414L11 6.414V17a1 1 0 11-2 0V6.414l-4.293 4.293a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>'
+      }).appendTo('body');
+
+      $toTop.on('click', function() {
+        $('html, body').animate({ scrollTop: 0 }, 400);
+      });
+
+      $(window).on('scroll', function() {
+        if ($(this).scrollTop() > 400) { $toTop.removeClass('hidden'); }
+        else { $toTop.addClass('hidden'); }
+      });
+    });
+  </script>
+</body>
+</html>
+
+
