@@ -90,6 +90,7 @@
             <h3>Debug Info:</h3>
             <p>roundMatchUps type: {{:typeof roundMatchUps}}</p>
             <p>roundMatchUps keys: {{if roundMatchUps && typeof roundMatchUps === 'object' && roundMatchUps !== null}}{{:Object.keys(roundMatchUps).join(', ')}}{{else}}undefined or not an object{{/if}}</p>
+            <p>Sample schedule data: {{if roundMatchUps && roundMatchUps["1"] && roundMatchUps["1"][0] && roundMatchUps["1"][0].schedule}}{{:roundMatchUps["1"][0].schedule.scheduledDate}} {{:roundMatchUps["1"][0].schedule.scheduledTime}}{{else}}No schedule data found{{/if}}</p>
             {{if roundMatchUps && typeof roundMatchUps === 'object' && roundMatchUps !== null}}
                 {{props roundMatchUps}}
                     <p>Key: {{:key}}, Data type: {{:typeof prop}}, Length: {{:prop ? prop.length : 'undefined'}}</p>
@@ -341,8 +342,9 @@
             // Load the actual JSON data
             //loadDrawData();
             
-            // Uncomment to test with sample data instead
-             generateBracketHTML(sampleDrawData, 0);
+            // Test with sample data
+            console.log('Using sampleDrawData:', sampleDrawData);
+            generateBracketHTML(sampleDrawData, 0);
         });
     </script>
 </body>
