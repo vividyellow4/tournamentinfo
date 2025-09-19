@@ -89,13 +89,13 @@
         <div>
             <h3>Debug Info:</h3>
             <p>roundMatchUps type: {{:typeof roundMatchUps}}</p>
-            <p>roundMatchUps keys: {{if roundMatchUps}}{{:Object.keys(roundMatchUps).join(', ')}}{{else}}undefined{{/if}}</p>
-            {{if roundMatchUps}}
+            <p>roundMatchUps keys: {{if roundMatchUps && typeof roundMatchUps === 'object' && roundMatchUps !== null}}{{:Object.keys(roundMatchUps).join(', ')}}{{else}}undefined or not an object{{/if}}</p>
+            {{if roundMatchUps && typeof roundMatchUps === 'object' && roundMatchUps !== null}}
                 {{props roundMatchUps}}
                     <p>Key: {{:key}}, Data type: {{:typeof prop}}, Length: {{:prop ? prop.length : 'undefined'}}</p>
                 {{/props}}
             {{else}}
-                <p>roundMatchUps is undefined or null</p>
+                <p>roundMatchUps is undefined, null, or not an object</p>
             {{/if}}
         </div>
     </script>
